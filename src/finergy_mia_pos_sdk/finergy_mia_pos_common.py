@@ -8,7 +8,7 @@ class FinergyMiaPosCommon:
     DEFAULT_TIMEOUT = 30
 
     @classmethod
-    def send_request(cls, method: str, url: str, data: dict = None, params: dict = None, token: str = None):
+    def send_request(cls, method: str, url: str, data: dict = None, params: dict = None, token: str = None) -> dict:
         """
         Sends an HTTP request to the Mia POS API.
 

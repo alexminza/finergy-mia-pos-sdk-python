@@ -1,8 +1,5 @@
 """Python SDK for Finergy MIA POS eComm API"""
 
-import json
-import logging
-import hashlib
 import base64
 
 from cryptography.hazmat.primitives import hashes, serialization
