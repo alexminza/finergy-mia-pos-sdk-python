@@ -107,6 +107,33 @@ class FinergyMiaPosSdk:
         token = self.__get_access_token()
         return self.__api_client.get_payment_status(token=token, payment_id=payment_id)
 
+    def validate_callback_signature(self, callback_data: dict):
+        """
+        Validates the callback data signature.
+
+        Args:
+            callback_data (dict): Callback payload data.
+
+        Returns:
+            bool: Callback data payload signature validation result.
+
+        Raises:
+            FinergyValidationException: If required parameters are missing or fails to verify callback signature.
+            FinergyClientApiException: If there is an API error during the request.
+        """
+
+        #https://github.com/finergy-tech/mia-pay-ecomm-php-sdk/blob/main/examples/process_callback.php
+        callback_signature = callback_data.get('signature')
+        callback_result = callback_data.get('result')
+
+        if not callback_signature or not callback_result:
+            raise FinergyValidationException('Missing result or signature in callback data.')
+
+        sign_string = self.form_sign_string_by_result(result_data=callback_result)
+        validation_result = self.verify_signature(result_str=sign_string, signature=callback_signature)
+
+        return validation_result
+
     def verify_signature(self, result_str: str, signature: str):
         """
         Verifies the signature of a payment result.
@@ -159,7 +186,8 @@ class FinergyMiaPosSdk:
         except Exception as e:
             raise FinergyValidationException(f'Failed to verify signature: {e}') from e
 
-    def form_sign_string_by_result(self, result_data: dict):
+    @staticmethod
+    def form_sign_string_by_result(result_data: dict):
         """
         Forms a signature string based on result data.
 
