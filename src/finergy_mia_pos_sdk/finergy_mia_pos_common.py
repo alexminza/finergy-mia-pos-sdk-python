@@ -4,11 +4,13 @@ import logging
 
 import requests
 
+logger = logging.getLogger(__name__)
+
 class FinergyMiaPosCommon:
     DEFAULT_TIMEOUT = 30
 
     @classmethod
-    def send_request(cls, method: str, url: str, data: dict = None, params: dict = None, token: str = None) -> dict:
+    def send_request(cls, method: str, url: str, data: dict = None, params: dict = None, token: str = None):
         """
         Sends an HTTP request to the Mia POS API.
 
@@ -29,14 +31,14 @@ class FinergyMiaPosCommon:
         try:
             auth = BearerAuth(token) if token else None
 
-            logging.debug('FinergyMiaPosSdk Request', extra={'method': method, 'url': url, 'data': data, 'params': params})
+            logger.debug('FinergyMiaPosSdk Request', extra={'method': method, 'url': url, 'data': data, 'params': params, 'token': token})
             with requests.request(method=method, url=url, params=params, json=data, auth=auth, timeout=cls.DEFAULT_TIMEOUT) as response:
                 #response.raise_for_status()
-                if response.status_code >= 400:
+                if not response.ok:
                     raise FinergyClientApiException(f'Mia POS client url {url}, method {method} HTTP Error: {response.status_code}, Response: {response.text}')
 
-                response_json = response.json()
-                logging.debug('FinergyMiaPosSdk Response', extra={'response_json': response_json})
+                response_json: dict = response.json()
+                logger.debug('FinergyMiaPosSdk Response', extra={'response_json': response_json})
                 return response_json
         except Exception as e:
             raise FinergyClientApiException(f'Mia POS client url {url}, method {method} error: {e}') from e
@@ -51,7 +53,7 @@ class BearerAuth(requests.auth.AuthBase):
     def __init__(self, token: str):
         self.token = token
 
-    def __call__(self, request: requests.PreparedRequest) -> requests.PreparedRequest:
+    def __call__(self, request: requests.PreparedRequest):
         request.headers["Authorization"] = f'Bearer {self.token}'
         return request
 #endregion
