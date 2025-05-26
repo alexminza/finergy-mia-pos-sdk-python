@@ -5,6 +5,8 @@ import logging
 
 from .finergy_mia_pos_common import FinergyMiaPosCommon, FinergyClientApiException
 
+logger = logging.getLogger(__name__)
+
 class FinergyMiaPosAuthClient:
     """
     Handles authentication with the Mia POS Ecomm API.
@@ -45,7 +47,7 @@ class FinergyMiaPosAuthClient:
             try:
                 return self.__refresh_access_token()
             except Exception:
-                logging.exception('Mia POS refresh token failed')
+                logger.exception('Mia POS refresh token failed')
 
         return self.__generate_new_tokens()
 
