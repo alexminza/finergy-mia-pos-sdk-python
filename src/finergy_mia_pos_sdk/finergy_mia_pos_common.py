@@ -66,9 +66,9 @@ class FinergyMiaPosSdkException(Exception):
 class FinergyClientApiException(FinergyMiaPosSdkException):
     """Represents an exception thrown when an API request fails."""
 
-    __http_status_code: int = None
-    __error_code: str = None
-    __error_message: str = None
+    _http_status_code: int = None
+    _error_code: str = None
+    _error_message: str = None
 
     def __init__(self, message: str, http_status_code: int = None, error_code: str = None, error_message: str = None):
         """
@@ -81,9 +81,9 @@ class FinergyClientApiException(FinergyMiaPosSdkException):
             error_message (str): Error message returned by the API.
         """
         super().__init__(message)
-        self.__http_status_code = http_status_code
-        self.__error_code = error_code
-        self.__error_message = error_message
+        self._http_status_code = http_status_code
+        self._error_code = error_code
+        self._error_message = error_message
 
     def get_http_status_code(self):
         """
@@ -93,7 +93,7 @@ class FinergyClientApiException(FinergyMiaPosSdkException):
             int: HTTP status code or None
         """
 
-        return self.__http_status_code
+        return self._http_status_code
 
     def get_error_code(self):
         """
@@ -103,7 +103,7 @@ class FinergyClientApiException(FinergyMiaPosSdkException):
             str: Error code or None
         """
 
-        return self.__error_code
+        return self._error_code
 
     def get_error_message(self):
         """
@@ -113,12 +113,12 @@ class FinergyClientApiException(FinergyMiaPosSdkException):
             str: Error message or None
         """
 
-        return self.__error_message
+        return self._error_message
 
 class FinergyValidationException(FinergyMiaPosSdkException):
     """Represents an exception thrown when validation of input data fails."""
 
-    __invalid_fields: list = None
+    _invalid_fields: list = None
 
     def __init__(self, message: str, invalid_fields: list = None):
         """
@@ -130,7 +130,7 @@ class FinergyValidationException(FinergyMiaPosSdkException):
         """
 
         super().__init__(message)
-        self.__invalid_fields = invalid_fields or []
+        self._invalid_fields = invalid_fields or []
 
     def get_invalid_fields(self):
         """
@@ -140,5 +140,5 @@ class FinergyValidationException(FinergyMiaPosSdkException):
             list: List of invalid field names
         """
 
-        return self.__invalid_fields
+        return self._invalid_fields
 #endregion

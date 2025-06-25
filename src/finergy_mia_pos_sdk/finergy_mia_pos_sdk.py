@@ -13,9 +13,9 @@ from .finergy_mia_pos_common import FinergyValidationException
 # Based on Finergy MIA POS PHP SDK https://github.com/finergy-tech/mia-pay-ecomm-php-sdk (https://packagist.org/packages/finergy/mia-pos-sdk)
 
 class FinergyMiaPosSdk:
-    __instance = None
-    __api_client = None
-    __auth_client = None
+    _instance = None
+    _api_client = None
+    _auth_client = None
 
     def __init__(self, base_url: str, merchant_id: str, secret_key: str):
         """
@@ -39,8 +39,8 @@ class FinergyMiaPosSdk:
         if not secret_key:
             raise FinergyValidationException('Secret Key is required.')
 
-        self.__auth_client = FinergyMiaPosAuthClient(base_url=base_url, merchant_id=merchant_id, secret_key=secret_key)
-        self.__api_client = FinergyMiaPosApiClient(base_url=base_url)
+        self._auth_client = FinergyMiaPosAuthClient(base_url=base_url, merchant_id=merchant_id, secret_key=secret_key)
+        self._api_client = FinergyMiaPosApiClient(base_url=base_url)
 
     @classmethod
     def get_instance(cls, base_url: str, merchant_id: str, secret_key: str):
@@ -59,10 +59,10 @@ class FinergyMiaPosSdk:
             FinergyValidationException: If required parameters are missing.
         """
 
-        if cls.__instance is None:
-            cls.__instance = cls(base_url=base_url, merchant_id=merchant_id, secret_key=secret_key)
+        if cls._instance is None:
+            cls._instance = cls(base_url=base_url, merchant_id=merchant_id, secret_key=secret_key)
 
-        return cls.__instance
+        return cls._instance
 
     def create_payment(self, payment_data: dict):
         """
@@ -82,9 +82,9 @@ class FinergyMiaPosSdk:
 
         required_fields = ['terminalId', 'orderId', 'amount', 'currency', 'payDescription']
 
-        self.__validate_parameters(data=payment_data, required_fields=required_fields)
-        token = self.__get_access_token()
-        return self.__api_client.create_payment(token=token, payment_data=payment_data)
+        self._validate_parameters(data=payment_data, required_fields=required_fields)
+        token = self._get_access_token()
+        return self._api_client.create_payment(token=token, payment_data=payment_data)
 
     def get_payment_status(self, payment_id: str):
         """
@@ -104,8 +104,8 @@ class FinergyMiaPosSdk:
         if not payment_id:
             raise FinergyValidationException('Payment ID is required.')
 
-        token = self.__get_access_token()
-        return self.__api_client.get_payment_status(token=token, payment_id=payment_id)
+        token = self._get_access_token()
+        return self._api_client.get_payment_status(token=token, payment_id=payment_id)
 
     def validate_callback_signature(self, callback_data: dict):
         """
@@ -156,8 +156,8 @@ class FinergyMiaPosSdk:
         if not signature:
             raise FinergyValidationException('Signature is required.')
 
-        token = self.__get_access_token()
-        public_key_str = self.__api_client.get_public_key(token=token)
+        token = self._get_access_token()
+        public_key_str = self._api_client.get_public_key(token=token)
 
         if not public_key_str:
             raise FinergyValidationException('Public key is missing in the response.')
@@ -215,7 +215,7 @@ class FinergyMiaPosSdk:
 
         return ';'.join(formatted_values)
 
-    def __validate_parameters(self, data: dict, required_fields: list):
+    def _validate_parameters(self, data: dict, required_fields: list):
         """
         Validate the required parameters.
 
@@ -238,5 +238,5 @@ class FinergyMiaPosSdk:
                 f'Missing required fields: {", ".join(missing_fields)}',
                 invalid_fields=missing_fields)
 
-    def __get_access_token(self):
-        return self.__auth_client.get_access_token()
+    def _get_access_token(self):
+        return self._auth_client.get_access_token()

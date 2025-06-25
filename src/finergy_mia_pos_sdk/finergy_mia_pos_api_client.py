@@ -9,10 +9,10 @@ class FinergyMiaPosApiClient:
     and retrieving the public key.
     """
 
-    __base_url: str = None
+    _base_url: str = None
 
     def __init__(self, base_url: str):
-        self.__base_url = base_url.rstrip('/')
+        self._base_url = base_url.rstrip('/')
 
     def create_payment(self, token: str, payment_data: dict):
         """
@@ -30,7 +30,7 @@ class FinergyMiaPosApiClient:
             FinergyClientApiException: If the API request fails or returns an error.
         """
 
-        url = self.__base_url + '/ecomm/api/v1/pay'
+        url = self._base_url + '/ecomm/api/v1/pay'
         return FinergyMiaPosCommon.send_request(method='POST', url=url, data=payment_data, token=token)
 
     def get_payment_status(self, token: str, payment_id: str):
@@ -49,7 +49,7 @@ class FinergyMiaPosApiClient:
             FinergyClientApiException: If the API request fails or returns an error.
         """
 
-        url = self.__base_url + f'/ecomm/api/v1/payment/{payment_id}'
+        url = self._base_url + f'/ecomm/api/v1/payment/{payment_id}'
         return FinergyMiaPosCommon.send_request(method='GET', url=url, token=token)
 
     def get_public_key(self, token: str):
@@ -67,7 +67,7 @@ class FinergyMiaPosApiClient:
             FinergyClientApiException: If the public key is not found or the API request fails.
         """
 
-        url = self.__base_url + '/ecomm/api/v1/public-key'
+        url = self._base_url + '/ecomm/api/v1/public-key'
         response = FinergyMiaPosCommon.send_request(method='GET', url=url, token=token)
 
         public_key = response.get('publicKey') if response else None
