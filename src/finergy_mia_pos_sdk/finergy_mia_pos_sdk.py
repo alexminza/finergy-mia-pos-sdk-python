@@ -122,6 +122,7 @@ class FinergyMiaPosSdk:
             FinergyClientApiException: If there is an API error during the request.
         """
 
+        #https://github.com/finergy-tech/mia-pay-ecomm-integration/blob/main/docs/en/signature-verification.md
         #https://github.com/finergy-tech/mia-pay-ecomm-php-sdk/blob/main/examples/process_callback.php
         callback_signature = callback_data.get('signature')
         callback_result = callback_data.get('result')
