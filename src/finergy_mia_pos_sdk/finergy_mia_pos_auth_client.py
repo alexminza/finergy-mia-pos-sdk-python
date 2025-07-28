@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 class FinergyMiaPosAuthClient:
     """
-    Handles authentication with the Mia POS Ecomm API.
+    Handles authentication with the MIA POS Ecomm API.
     Provides methods to generate, refresh, and retrieve access tokens.
     """
 
@@ -47,14 +47,14 @@ class FinergyMiaPosAuthClient:
             try:
                 return self._refresh_access_token()
             except Exception:
-                logger.exception('Mia POS refresh token failed')
+                logger.exception('MIA POS refresh token failed')
 
         return self._generate_new_tokens()
 
     def _generate_new_tokens(self):
         """
         Generates a new access token using the merchant credentials.
-        Sends a request to the Mia POS API to obtain a new access and refresh token pair.
+        Sends a request to the MIA POS API to obtain a new access and refresh token pair.
 
         Returns:
             str: The newly generated access token.
@@ -80,7 +80,7 @@ class FinergyMiaPosAuthClient:
     def _refresh_access_token(self):
         """
         Refreshes the current access token using the refresh token.
-        Sends a request to the Mia POS API to refresh the access token.
+        Sends a request to the MIA POS API to refresh the access token.
 
         Returns:
             str: The refreshed access token.
@@ -114,7 +114,7 @@ class FinergyMiaPosAuthClient:
 
     def _parse_response_token(self, response: dict):
         """
-        Parses the token response from the Mia POS API.
+        Parses the token response from the MIA POS API.
         Extracts the access token, refresh token, and token expiration time from the response.
 
         Args:

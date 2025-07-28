@@ -12,7 +12,7 @@ class FinergyMiaPosCommon:
     @classmethod
     def send_request(cls, method: str, url: str, data: dict = None, params: dict = None, token: str = None):
         """
-        Sends an HTTP request to the Mia POS API.
+        Sends an HTTP request to the MIA POS API.
 
         Args:
             method (str): HTTP method (e.g., 'POST', 'GET').
@@ -35,13 +35,13 @@ class FinergyMiaPosCommon:
             with requests.request(method=method, url=url, params=params, json=data, auth=auth, timeout=cls.DEFAULT_TIMEOUT) as response:
                 #response.raise_for_status()
                 if not response.ok:
-                    raise FinergyClientApiException(f'Mia POS client url {url}, method {method} HTTP Error: {response.status_code}, Response: {response.text}')
+                    raise FinergyClientApiException(f'MIA POS client url {url}, method {method} HTTP Error: {response.status_code}, Response: {response.text}')
 
                 response_json: dict = response.json()
                 logger.debug('FinergyMiaPosSdk Response', extra={'response_json': response_json})
                 return response_json
-        except Exception as e:
-            raise FinergyClientApiException(f'Mia POS client url {url}, method {method} error: {e}') from e
+        except Exception as ex:
+            raise FinergyClientApiException(f'MIA POS client url {url}, method {method} error: {ex}') from ex
 
 #region Requests
 class BearerAuth(requests.auth.AuthBase):
@@ -60,7 +60,7 @@ class BearerAuth(requests.auth.AuthBase):
 
 #region Exceptions
 class FinergyMiaPosSdkException(Exception):
-    """Base exception class for Mia POS SDK."""
+    """Base exception class for MIA POS SDK."""
     pass
 
 class FinergyClientApiException(FinergyMiaPosSdkException):

@@ -4,7 +4,7 @@ from .finergy_mia_pos_common import FinergyMiaPosCommon, FinergyClientApiExcepti
 
 class FinergyMiaPosApiClient:
     """
-    Handles API requests to the Mia POS Ecomm API.
+    Handles API requests to the MIA POS Ecomm API.
     Provides methods for creating payments, checking payment status,
     and retrieving the public key.
     """
@@ -17,7 +17,7 @@ class FinergyMiaPosApiClient:
     def create_payment(self, token: str, payment_data: dict):
         """
         Creates a new payment.
-        Sends a POST request to the Mia POS API to create a payment.
+        Sends a POST request to the MIA POS API to create a payment.
 
         Args:
             token (str): Access token for authorization.
@@ -36,7 +36,7 @@ class FinergyMiaPosApiClient:
     def get_payment_status(self, token: str, payment_id: str):
         """
         Retrieves the status of a payment.
-        Sends a GET request to the Mia POS API to retrieve the payment status by its ID.
+        Sends a GET request to the MIA POS API to retrieve the payment status by its ID.
 
         Args:
             token (str): Access token for authorization.
@@ -54,7 +54,7 @@ class FinergyMiaPosApiClient:
 
     def get_public_key(self, token: str):
         """
-        Retrieves the public key from the Mia POS API.
+        Retrieves the public key from the MIA POS API.
         Sends a GET request to retrieve the public key for signature verification.
 
         Args:

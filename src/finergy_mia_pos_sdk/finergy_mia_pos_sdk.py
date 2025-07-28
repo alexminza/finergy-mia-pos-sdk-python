@@ -22,8 +22,8 @@ class FinergyMiaPosSdk:
         Initializes the SDK with the base URL, Merchant ID, and Secret Key.
 
         Args:
-            base_url (str): Base URL for the Mia POS API.
-            merchant_id (str): Merchant ID provided by Mia POS.
+            base_url (str): Base URL for the MIA POS API.
+            merchant_id (str): Merchant ID provided by MIA POS.
             secret_key (str): Secret Key for authentication.
 
         Raises:
@@ -48,8 +48,8 @@ class FinergyMiaPosSdk:
         Returns a singleton instance of FinergyMiaPosSdk.
 
         Args:
-            base_url (str): Base URL for the Mia POS API.
-            merchant_id (str): Merchant ID provided by Mia POS.
+            base_url (str): Base URL for the MIA POS API.
+            merchant_id (str): Merchant ID provided by MIA POS.
             secret_key (str): Secret Key for authentication.
 
         Returns:
@@ -184,8 +184,8 @@ class FinergyMiaPosSdk:
             except InvalidSignature:
                 return False
 
-        except Exception as e:
-            raise FinergyValidationException(f'Failed to verify signature: {e}') from e
+        except Exception as ex:
+            raise FinergyValidationException(f'Failed to verify signature: {ex}') from ex
 
     @staticmethod
     def form_sign_string_by_result(result_data: dict):
