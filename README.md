@@ -6,7 +6,7 @@
 ## Installation
 To easily install or upgrade to the latest release, use `pip`:
 ```shell
-pip install --upgrade finergy_mia_pos_sdk
+pip install --upgrade finergy-mia-pos-sdk
 ```
 
 ## Getting started
