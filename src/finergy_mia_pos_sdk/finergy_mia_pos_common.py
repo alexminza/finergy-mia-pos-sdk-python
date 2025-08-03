@@ -46,7 +46,7 @@ class FinergyMiaPosCommon:
 #region Requests
 class BearerAuth(requests.auth.AuthBase):
     """Attaches HTTP Bearer Token Authentication to the given Request object."""
-    #https://requests.readthedocs.io/en/latest/user/authentication/#new-forms-of-authentication
+    # https://requests.readthedocs.io/en/latest/user/authentication/#new-forms-of-authentication
 
     token: str = None
 

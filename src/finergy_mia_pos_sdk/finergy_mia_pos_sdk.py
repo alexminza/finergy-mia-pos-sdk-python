@@ -11,6 +11,7 @@ from .finergy_mia_pos_api_client import FinergyMiaPosApiClient
 from .finergy_mia_pos_common import FinergyValidationException
 
 # Based on Finergy MIA POS PHP SDK https://github.com/finergy-tech/mia-pay-ecomm-php-sdk (https://packagist.org/packages/finergy/mia-pos-sdk)
+# Integration with MIA POS eComm https://github.com/finergy-tech/mia-pay-ecomm-integration
 
 class FinergyMiaPosSdk:
     _instance = None
@@ -122,8 +123,8 @@ class FinergyMiaPosSdk:
             FinergyClientApiException: If there is an API error during the request.
         """
 
-        #https://github.com/finergy-tech/mia-pay-ecomm-integration/blob/main/docs/en/signature-verification.md
-        #https://github.com/finergy-tech/mia-pay-ecomm-php-sdk/blob/main/examples/process_callback.php
+        # https://github.com/finergy-tech/mia-pay-ecomm-integration/blob/main/docs/en/signature-verification.md
+        # https://github.com/finergy-tech/mia-pay-ecomm-php-sdk/blob/main/examples/process_callback.php
         callback_signature = callback_data.get('signature')
         callback_result = callback_data.get('result')
 
