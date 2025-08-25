@@ -21,7 +21,7 @@ Add project configuration:
 ```python
 import os
 
-FINERGY_MIA_POS_BASE_URL = os.getenv('FINERGY_MIA_POS_BASE_URL', 'https://ecomm-test.miapos.md')
+FINERGY_MIA_POS_BASE_URL = os.getenv('FINERGY_MIA_POS_BASE_URL', FinergyMiaPosSdk.TEST_BASE_URL)
 FINERGY_MIA_POS_MERCHANT_ID = os.getenv('FINERGY_MIA_POS_MERCHANT_ID')
 FINERGY_MIA_POS_SECRET_KEY = os.getenv('FINERGY_MIA_POS_SECRET_KEY')
 FINERGY_MIA_POS_TERMINAL_ID = os.getenv('FINERGY_MIA_POS_TERMINAL_ID')

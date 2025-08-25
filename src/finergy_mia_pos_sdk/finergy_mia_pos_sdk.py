@@ -14,6 +14,8 @@ from .finergy_mia_pos_common import FinergyValidationException
 # Integration with MIA POS eComm https://github.com/finergy-tech/mia-pay-ecomm-integration
 
 class FinergyMiaPosSdk:
+    TEST_BASE_URL = 'https://ecomm-test.miapos.md'
+
     _instance = None
     _api_client = None
     _auth_client = None
