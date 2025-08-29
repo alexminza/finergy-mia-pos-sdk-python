@@ -1,11 +1,9 @@
 """Python SDK for Finergy MIA POS eComm API"""
 
 import time
-import logging
 
 from .finergy_mia_pos_common import FinergyMiaPosCommon, FinergyClientApiException
-
-logger = logging.getLogger(__name__)
+from . import logger
 
 
 class FinergyMiaPosAuthClient:

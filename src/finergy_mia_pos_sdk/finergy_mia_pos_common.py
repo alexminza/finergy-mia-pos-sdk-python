@@ -1,10 +1,8 @@
 """Python SDK for Finergy MIA POS eComm API"""
 
-import logging
-
 import requests
 
-logger = logging.getLogger(__name__)
+from . import logger
 
 
 class FinergyMiaPosCommon:
