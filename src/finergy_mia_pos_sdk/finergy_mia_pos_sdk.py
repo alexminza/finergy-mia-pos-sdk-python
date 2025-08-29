@@ -10,6 +10,7 @@ from .finergy_mia_pos_auth_client import FinergyMiaPosAuthClient
 from .finergy_mia_pos_api_client import FinergyMiaPosApiClient
 from .finergy_mia_pos_common import FinergyValidationException
 
+
 # Based on Finergy MIA POS PHP SDK https://github.com/finergy-tech/mia-pay-ecomm-php-sdk (https://packagist.org/packages/finergy/mia-pos-sdk)
 # Integration with MIA POS eComm https://github.com/finergy-tech/mia-pay-ecomm-integration
 

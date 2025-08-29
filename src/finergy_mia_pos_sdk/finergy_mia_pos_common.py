@@ -6,6 +6,7 @@ import requests
 
 logger = logging.getLogger(__name__)
 
+
 class FinergyMiaPosCommon:
     DEFAULT_TIMEOUT = 30
 
@@ -31,14 +32,15 @@ class FinergyMiaPosCommon:
         try:
             auth = BearerAuth(token) if token else None
 
-            logger.debug('FinergyMiaPosSdk Request', extra={'method': method, 'url': url, 'data': data, 'params': params, 'token': token})
+            logger.debug('%s Request: %s %s', cls.__qualname__, method, url, extra={'method': method, 'url': url, 'data': data, 'params': params, 'token': token})
             with requests.request(method=method, url=url, params=params, json=data, auth=auth, timeout=cls.DEFAULT_TIMEOUT) as response:
-                #response.raise_for_status()
                 if not response.ok:
+                    logger.error('%s Error: %d %s', cls.__qualname__, response.status_code, response.text, extra={'method': method, 'url': url, 'params': params, 'response_text': response.text, 'status_code': response.status_code})
+                    #response.raise_for_status()
                     raise FinergyClientApiException(f'MIA POS client url {url}, method {method} HTTP Error: {response.status_code}, Response: {response.text}')
 
                 response_json: dict = response.json()
-                logger.debug('FinergyMiaPosSdk Response', extra={'response_json': response_json})
+                logger.debug('%s Response: %d', cls.__qualname__, response.status_code, extra={'response_json': response_json})
                 return response_json
         except Exception as ex:
             raise FinergyClientApiException(f'MIA POS client url {url}, method {method} error: {ex}') from ex

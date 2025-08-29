@@ -7,6 +7,7 @@ from .finergy_mia_pos_common import FinergyMiaPosCommon, FinergyClientApiExcepti
 
 logger = logging.getLogger(__name__)
 
+
 class FinergyMiaPosAuthClient:
     """
     Handles authentication with the MIA POS Ecomm API.

@@ -2,6 +2,7 @@
 
 from .finergy_mia_pos_common import FinergyMiaPosCommon, FinergyClientApiException
 
+
 class FinergyMiaPosApiClient:
     """
     Handles API requests to the MIA POS Ecomm API.
