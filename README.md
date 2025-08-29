@@ -1,10 +1,12 @@
 # Python SDK for Finergy MIA POS eComm API
-Finergy MIA POS eComm integration: https://github.com/finergy-tech/mia-pay-ecomm-integration
+* Finergy MIA POS eComm integration: https://github.com/finergy-tech/mia-pay-ecomm-integration
+* GitHub project https://github.com/alexminza/finergy-mia-pos-sdk-python
+* PyPI package https://pypi.org/project/finergy-mia-pos-sdk/
 
 ## Installation
-To easily install or upgrade to the latest release, use `pip`.
+To easily install or upgrade to the latest release, use `pip`:
 ```shell
-pip install --upgrade finergy_mia_pos_sdk
+pip install --upgrade finergy-mia-pos-sdk
 ```
 
 ## Getting started
@@ -19,7 +21,7 @@ Add project configuration:
 ```python
 import os
 
-FINERGY_MIA_POS_BASE_URL = os.getenv('FINERGY_MIA_POS_BASE_URL', 'https://ecomm-test.miapos.md')
+FINERGY_MIA_POS_BASE_URL = os.getenv('FINERGY_MIA_POS_BASE_URL', FinergyMiaPosSdk.TEST_BASE_URL)
 FINERGY_MIA_POS_MERCHANT_ID = os.getenv('FINERGY_MIA_POS_MERCHANT_ID')
 FINERGY_MIA_POS_SECRET_KEY = os.getenv('FINERGY_MIA_POS_SECRET_KEY')
 FINERGY_MIA_POS_TERMINAL_ID = os.getenv('FINERGY_MIA_POS_TERMINAL_ID')

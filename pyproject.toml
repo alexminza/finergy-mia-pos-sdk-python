@@ -1,21 +1,29 @@
 [project]
 name = "finergy-mia-pos-sdk"
-version = "1.0.1"
-authors = [
-  { name="Alexander Minza" },
-]
+version = "1.0.2"
+authors = [{ name = "Alexander Minza" }]
 description = "Python SDK for Finergy MIA POS eComm API"
 readme = "README.md"
 requires-python = ">=3.9"
-keywords = ["finergy", "moldova", "mia", "pos", "qr", "payments", "api", "sdk", "python"]
-classifiers = [
-    "Intended Audience :: Developers",
-    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
-    "Operating System :: OS Independent",
-    "Programming Language :: Python :: 3",
-    "Topic :: Software Development :: Libraries :: Python Modules"
+dependencies = ["requests", "cryptography"]
+keywords = [
+  "finergy",
+  "moldova",
+  "mia",
+  "pos",
+  "qr",
+  "payments",
+  "api",
+  "sdk",
+  "python",
 ]
-license.text = "GPL-3.0-or-later"
+classifiers = [
+  "Intended Audience :: Developers",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+]
+license = "GPL-3.0-or-later"
 
 [project.urls]
 Homepage = "https://github.com/alexminza/finergy-mia-pos-sdk-python"

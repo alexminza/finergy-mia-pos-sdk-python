@@ -1,10 +1,9 @@
 """Python SDK for Finergy MIA POS eComm API"""
 
-import logging
-
 import requests
 
-logger = logging.getLogger(__name__)
+from . import logger
+
 
 class FinergyMiaPosCommon:
     DEFAULT_TIMEOUT = 30
@@ -12,7 +11,7 @@ class FinergyMiaPosCommon:
     @classmethod
     def send_request(cls, method: str, url: str, data: dict = None, params: dict = None, token: str = None):
         """
-        Sends an HTTP request to the Mia POS API.
+        Sends an HTTP request to the MIA POS API.
 
         Args:
             method (str): HTTP method (e.g., 'POST', 'GET').
@@ -31,22 +30,23 @@ class FinergyMiaPosCommon:
         try:
             auth = BearerAuth(token) if token else None
 
-            logger.debug('FinergyMiaPosSdk Request', extra={'method': method, 'url': url, 'data': data, 'params': params, 'token': token})
+            logger.debug('%s Request: %s %s', cls.__qualname__, method, url, extra={'method': method, 'url': url, 'data': data, 'params': params, 'token': token})
             with requests.request(method=method, url=url, params=params, json=data, auth=auth, timeout=cls.DEFAULT_TIMEOUT) as response:
-                #response.raise_for_status()
                 if not response.ok:
-                    raise FinergyClientApiException(f'Mia POS client url {url}, method {method} HTTP Error: {response.status_code}, Response: {response.text}')
+                    logger.error('%s Error: %d %s', cls.__qualname__, response.status_code, response.text, extra={'method': method, 'url': url, 'params': params, 'response_text': response.text, 'status_code': response.status_code})
+                    #response.raise_for_status()
+                    raise FinergyClientApiException(f'MIA POS client url {url}, method {method} HTTP Error: {response.status_code}, Response: {response.text}')
 
                 response_json: dict = response.json()
-                logger.debug('FinergyMiaPosSdk Response', extra={'response_json': response_json})
+                logger.debug('%s Response: %d', cls.__qualname__, response.status_code, extra={'response_json': response_json})
                 return response_json
-        except Exception as e:
-            raise FinergyClientApiException(f'Mia POS client url {url}, method {method} error: {e}') from e
+        except Exception as ex:
+            raise FinergyClientApiException(f'MIA POS client url {url}, method {method} error: {ex}') from ex
 
 #region Requests
 class BearerAuth(requests.auth.AuthBase):
     """Attaches HTTP Bearer Token Authentication to the given Request object."""
-    #https://requests.readthedocs.io/en/latest/user/authentication/#new-forms-of-authentication
+    # https://requests.readthedocs.io/en/latest/user/authentication/#new-forms-of-authentication
 
     token: str = None
 
@@ -60,15 +60,15 @@ class BearerAuth(requests.auth.AuthBase):
 
 #region Exceptions
 class FinergyMiaPosSdkException(Exception):
-    """Base exception class for Mia POS SDK."""
+    """Base exception class for MIA POS SDK."""
     pass
 
 class FinergyClientApiException(FinergyMiaPosSdkException):
     """Represents an exception thrown when an API request fails."""
 
-    __http_status_code: int = None
-    __error_code: str = None
-    __error_message: str = None
+    _http_status_code: int = None
+    _error_code: str = None
+    _error_message: str = None
 
     def __init__(self, message: str, http_status_code: int = None, error_code: str = None, error_message: str = None):
         """
@@ -81,9 +81,9 @@ class FinergyClientApiException(FinergyMiaPosSdkException):
             error_message (str): Error message returned by the API.
         """
         super().__init__(message)
-        self.__http_status_code = http_status_code
-        self.__error_code = error_code
-        self.__error_message = error_message
+        self._http_status_code = http_status_code
+        self._error_code = error_code
+        self._error_message = error_message
 
     def get_http_status_code(self):
         """
@@ -93,7 +93,7 @@ class FinergyClientApiException(FinergyMiaPosSdkException):
             int: HTTP status code or None
         """
 
-        return self.__http_status_code
+        return self._http_status_code
 
     def get_error_code(self):
         """
@@ -103,7 +103,7 @@ class FinergyClientApiException(FinergyMiaPosSdkException):
             str: Error code or None
         """
 
-        return self.__error_code
+        return self._error_code
 
     def get_error_message(self):
         """
@@ -113,12 +113,12 @@ class FinergyClientApiException(FinergyMiaPosSdkException):
             str: Error message or None
         """
 
-        return self.__error_message
+        return self._error_message
 
 class FinergyValidationException(FinergyMiaPosSdkException):
     """Represents an exception thrown when validation of input data fails."""
 
-    __invalid_fields: list = None
+    _invalid_fields: list = None
 
     def __init__(self, message: str, invalid_fields: list = None):
         """
@@ -130,7 +130,7 @@ class FinergyValidationException(FinergyMiaPosSdkException):
         """
 
         super().__init__(message)
-        self.__invalid_fields = invalid_fields or []
+        self._invalid_fields = invalid_fields or []
 
     def get_invalid_fields(self):
         """
@@ -140,5 +140,5 @@ class FinergyValidationException(FinergyMiaPosSdkException):
             list: List of invalid field names
         """
 
-        return self.__invalid_fields
+        return self._invalid_fields
 #endregion

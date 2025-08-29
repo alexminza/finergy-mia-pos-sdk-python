@@ -1,30 +1,29 @@
 """Python SDK for Finergy MIA POS eComm API"""
 
 import time
-import logging
 
 from .finergy_mia_pos_common import FinergyMiaPosCommon, FinergyClientApiException
+from . import logger
 
-logger = logging.getLogger(__name__)
 
 class FinergyMiaPosAuthClient:
     """
-    Handles authentication with the Mia POS Ecomm API.
+    Handles authentication with the MIA POS Ecomm API.
     Provides methods to generate, refresh, and retrieve access tokens.
     """
 
-    __base_url: str = None
-    __merchant_id: str = None
-    __secret_key: str = None
+    _base_url: str = None
+    _merchant_id: str = None
+    _secret_key: str = None
 
-    __access_token: str = None
-    __refresh_token: str = None
-    __access_expire_time: str = None
+    _access_token: str = None
+    _refresh_token: str = None
+    _access_expire_time: str = None
 
     def __init__(self, base_url: str, merchant_id: str, secret_key: str):
-        self.__base_url = base_url.rstrip('/')
-        self.__merchant_id = merchant_id
-        self.__secret_key = secret_key
+        self._base_url = base_url.rstrip('/')
+        self._merchant_id = merchant_id
+        self._secret_key = secret_key
 
     def get_access_token(self):
         """
@@ -40,21 +39,21 @@ class FinergyMiaPosAuthClient:
             FinergyClientApiException: If the token cannot be generated or refreshed.
         """
 
-        if self.__access_token and not self.__is_token_expired():
-            return self.__access_token
+        if self._access_token and not self._is_token_expired():
+            return self._access_token
 
-        if self.__refresh_token:
+        if self._refresh_token:
             try:
-                return self.__refresh_access_token()
+                return self._refresh_access_token()
             except Exception:
-                logger.exception('Mia POS refresh token failed')
+                logger.exception('MIA POS refresh token failed')
 
-        return self.__generate_new_tokens()
+        return self._generate_new_tokens()
 
-    def __generate_new_tokens(self):
+    def _generate_new_tokens(self):
         """
         Generates a new access token using the merchant credentials.
-        Sends a request to the Mia POS API to obtain a new access and refresh token pair.
+        Sends a request to the MIA POS API to obtain a new access and refresh token pair.
 
         Returns:
             str: The newly generated access token.
@@ -63,24 +62,24 @@ class FinergyMiaPosAuthClient:
             FinergyClientApiException: If the API request fails or no access token is returned.
         """
 
-        url = self.__base_url + '/ecomm/api/v1/token'
+        url = self._base_url + '/ecomm/api/v1/token'
         data = {
-            'merchantId': self.__merchant_id,
-            'secretKey': self.__secret_key,
+            'merchantId': self._merchant_id,
+            'secretKey': self._secret_key,
         }
 
         response = FinergyMiaPosCommon.send_request(method='POST', url=url, data=data)
-        self.__parse_response_token(response)
+        self._parse_response_token(response)
 
-        if not self.__access_token:
-            raise FinergyClientApiException(f'Failed to retrieve access token by merchantId {self.__merchant_id}. accessToken is missing from the response')
+        if not self._access_token:
+            raise FinergyClientApiException(f'Failed to retrieve access token by merchantId {self._merchant_id}. accessToken is missing from the response')
 
-        return self.__access_token
+        return self._access_token
 
-    def __refresh_access_token(self):
+    def _refresh_access_token(self):
         """
         Refreshes the current access token using the refresh token.
-        Sends a request to the Mia POS API to refresh the access token.
+        Sends a request to the MIA POS API to refresh the access token.
 
         Returns:
             str: The refreshed access token.
@@ -89,20 +88,20 @@ class FinergyMiaPosAuthClient:
             FinergyClientApiException: If the API request fails or no access token is returned.
         """
 
-        url = self.__base_url + '/ecomm/api/v1/token/refresh'
+        url = self._base_url + '/ecomm/api/v1/token/refresh'
         data = {
-            'refreshToken': self.__refresh_token,
+            'refreshToken': self._refresh_token,
         }
 
         response = FinergyMiaPosCommon.send_request(method='POST', url=url, data=data)
-        self.__parse_response_token(response)
+        self._parse_response_token(response)
 
-        if not self.__access_token:
-            raise FinergyClientApiException(f'Failed to refresh access token by merchantId {self.__merchant_id}. accessToken is missing from the response')
+        if not self._access_token:
+            raise FinergyClientApiException(f'Failed to refresh access token by merchantId {self._merchant_id}. accessToken is missing from the response')
 
-        return self.__access_token
+        return self._access_token
 
-    def __is_token_expired(self):
+    def _is_token_expired(self):
         """
         Checks whether the current access token has expired.
 
@@ -110,18 +109,18 @@ class FinergyMiaPosAuthClient:
             bool: True if the token is expired; otherwise, False.
         """
 
-        return not self.__access_expire_time or time.time() >= self.__access_expire_time
+        return not self._access_expire_time or time.time() >= self._access_expire_time
 
-    def __parse_response_token(self, response: dict):
+    def _parse_response_token(self, response: dict):
         """
-        Parses the token response from the Mia POS API.
+        Parses the token response from the MIA POS API.
         Extracts the access token, refresh token, and token expiration time from the response.
 
         Args:
             response (dict): The decoded API response containing token details.
         """
 
-        self.__access_token = response.get('accessToken')
-        self.__refresh_token = response.get('refreshToken')
+        self._access_token = response.get('accessToken')
+        self._refresh_token = response.get('refreshToken')
         expires_in = response.get('accessTokenExpiresIn', 0)
-        self.__access_expire_time = time.time() + expires_in - 10
+        self._access_expire_time = time.time() + expires_in - 10
