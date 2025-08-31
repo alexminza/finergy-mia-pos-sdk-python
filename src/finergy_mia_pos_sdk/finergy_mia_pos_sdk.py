@@ -17,7 +17,6 @@ from .finergy_mia_pos_common import FinergyValidationException
 class FinergyMiaPosSdk:
     TEST_BASE_URL = 'https://ecomm-test.miapos.md'
 
-    _instance = None
     _api_client = None
     _auth_client = None
 
@@ -45,28 +44,6 @@ class FinergyMiaPosSdk:
 
         self._auth_client = FinergyMiaPosAuthClient(base_url=base_url, merchant_id=merchant_id, secret_key=secret_key)
         self._api_client = FinergyMiaPosApiClient(base_url=base_url)
-
-    @classmethod
-    def get_instance(cls, base_url: str, merchant_id: str, secret_key: str):
-        """
-        Returns a singleton instance of FinergyMiaPosSdk.
-
-        Args:
-            base_url (str): Base URL for the MIA POS API.
-            merchant_id (str): Merchant ID provided by MIA POS.
-            secret_key (str): Secret Key for authentication.
-
-        Returns:
-            FinergyMiaPosSdk instance
-
-        Raises:
-            FinergyValidationException: If required parameters are missing.
-        """
-
-        if cls._instance is None:
-            cls._instance = cls(base_url=base_url, merchant_id=merchant_id, secret_key=secret_key)
-
-        return cls._instance
 
     def create_payment(self, payment_data: dict):
         """
