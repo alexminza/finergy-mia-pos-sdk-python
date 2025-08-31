@@ -69,6 +69,21 @@ class FinergyMiaPosSdk:
         return self._api_client.create_payment(token=token, payment_data=payment_data)
 
     async def create_payment_async(self, payment_data: dict):
+        """
+        Creates a new payment.
+
+        Args:
+            payment_data (dict): A dict containing payment details by miaEcomm protocol.
+                Required keys: 'terminalId', 'orderId', 'amount', 'currency', 'payDescription'.
+
+        Returns:
+            dict: Response from the API.
+
+        Raises:
+            FinergyValidationException: If required parameters are missing.
+            FinergyClientApiException: If there is an API error during the request.
+        """
+
         required_fields = ['terminalId', 'orderId', 'amount', 'currency', 'payDescription']
 
         self._validate_parameters(data=payment_data, required_fields=required_fields)
@@ -99,6 +114,20 @@ class FinergyMiaPosSdk:
         return self._api_client.get_payment_status(token=token, payment_id=payment_id)
 
     async def get_payment_status_async(self, payment_id: str):
+        """
+        Retrieves the status of a payment by its ID.
+
+        Args:
+            payment_id (str): The unique payment ID.
+
+        Returns:
+            dict: Response from the API.
+
+        Raises:
+            FinergyValidationException: If the payment ID is empty.
+            FinergyClientApiException: If there is an API error during the request.
+        """
+
         if not payment_id:
             raise FinergyValidationException('Payment ID is required.')
 
@@ -136,6 +165,20 @@ class FinergyMiaPosSdk:
         return validation_result
 
     async def validate_callback_signature_async(self, callback_data: dict):
+        """
+        Validates the callback data signature.
+
+        Args:
+            callback_data (dict): Callback payload data.
+
+        Returns:
+            bool: Callback data payload signature validation result.
+
+        Raises:
+            FinergyValidationException: If required parameters are missing or fails to verify callback signature.
+            FinergyClientApiException: If there is an API error during the request.
+        """
+
         callback_signature = callback_data.get('signature')
         callback_result = callback_data.get('result')
 
@@ -185,6 +228,21 @@ class FinergyMiaPosSdk:
             raise FinergyValidationException(f'Failed to verify signature: {ex}') from ex
 
     async def verify_signature_async(self, result_str: str, signature: str):
+        """
+        Verifies the signature of a payment result.
+
+        Args:
+            result_str (str): The result string to verify.
+            signature (str): The provided signature.
+
+        Returns:
+            bool: True if the signature is valid; otherwise, False.
+
+        Raises:
+            FinergyValidationException: If required parameters are missing.
+            FinergyClientApiException: If there is an API error during the request.
+        """
+
         if not result_str:
             raise FinergyValidationException('Result string is required.')
 
