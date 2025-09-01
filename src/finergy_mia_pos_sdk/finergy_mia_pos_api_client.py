@@ -118,7 +118,7 @@ class FinergyMiaPosApiClient:
         url = self._base_url + self.API_PUBLIC_KEY
         response = FinergyMiaPosCommon.send_request(method='GET', url=url, token=token)
 
-        public_key = response.get('publicKey') if response else None
+        public_key: str = response.get('publicKey') if response else None
 
         if not public_key:
             raise FinergyClientApiException('Public key not found in the response')
@@ -143,7 +143,7 @@ class FinergyMiaPosApiClient:
         url = self._base_url + self.API_PUBLIC_KEY
         response = await FinergyMiaPosCommon.send_request_async(method='GET', url=url, token=token)
 
-        public_key = response.get('publicKey') if response else None
+        public_key: str = response.get('publicKey') if response else None
 
         if not public_key:
             raise FinergyClientApiException('Public key not found in the response')

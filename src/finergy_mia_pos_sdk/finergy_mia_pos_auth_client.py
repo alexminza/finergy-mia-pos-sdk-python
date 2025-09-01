@@ -1,9 +1,11 @@
 """Python SDK for Finergy MIA POS eComm API"""
 
+import logging
 import time
 
 from .finergy_mia_pos_common import FinergyMiaPosCommon, FinergyClientApiException
-from . import logger
+
+logger = logging.getLogger(__name__)
 
 
 class FinergyMiaPosAuthClient:
@@ -212,5 +214,5 @@ class FinergyMiaPosAuthClient:
 
         self._access_token = response.get('accessToken')
         self._refresh_token = response.get('refreshToken')
-        expires_in = response.get('accessTokenExpiresIn', 0)
+        expires_in: int = response.get('accessTokenExpiresIn', 0)
         self._access_expire_time = time.time() + expires_in - 10

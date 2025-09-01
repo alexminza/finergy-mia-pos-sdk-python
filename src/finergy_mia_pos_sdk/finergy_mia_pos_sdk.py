@@ -153,8 +153,8 @@ class FinergyMiaPosSdk:
 
         # https://github.com/finergy-tech/mia-pay-ecomm-integration/blob/main/docs/en/signature-verification.md
         # https://github.com/finergy-tech/mia-pay-ecomm-php-sdk/blob/main/examples/process_callback.php
-        callback_signature = callback_data.get('signature')
-        callback_result = callback_data.get('result')
+        callback_signature: str = callback_data.get('signature')
+        callback_result: dict[str, any] = callback_data.get('result')
 
         if not callback_signature or not callback_result:
             raise FinergyValidationException('Missing result or signature in callback data.')
@@ -179,8 +179,8 @@ class FinergyMiaPosSdk:
             FinergyClientApiException: If there is an API error during the request.
         """
 
-        callback_signature = callback_data.get('signature')
-        callback_result = callback_data.get('result')
+        callback_signature: str = callback_data.get('signature')
+        callback_result: dict[str, any] = callback_data.get('result')
 
         if not callback_signature or not callback_result:
             raise FinergyValidationException('Missing result or signature in callback data.')
@@ -265,7 +265,7 @@ class FinergyMiaPosSdk:
             raise FinergyValidationException(f'Failed to verify signature: {ex}') from ex
 
     @staticmethod
-    def form_sign_string_by_result(result_data: dict):
+    def form_sign_string_by_result(result_data: dict[str, any]):
         """
         Forms a signature string based on result data.
 
@@ -317,7 +317,7 @@ class FinergyMiaPosSdk:
     #endregion
 
     #region Validation
-    def _validate_parameters(self, data: dict, required_fields: list):
+    def _validate_parameters(self, data: dict, required_fields: list[str]):
         """
         Validate the required parameters.
 
