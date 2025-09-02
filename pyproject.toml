@@ -1,11 +1,11 @@
 [project]
 name = "finergy-mia-pos-sdk"
-version = "1.0.2"
+version = "1.1.0"
 authors = [{ name = "Alexander Minza" }]
 description = "Python SDK for Finergy MIA POS eComm API"
 readme = "README.md"
 requires-python = ">=3.9"
-dependencies = ["requests", "cryptography"]
+dependencies = ["httpx", "cryptography"]
 keywords = [
   "finergy",
   "moldova",

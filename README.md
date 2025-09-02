@@ -31,7 +31,7 @@ FINERGY_MIA_POS_TERMINAL_ID = os.getenv('FINERGY_MIA_POS_TERMINAL_ID')
 ### Initialize SDK instance
 
 ```python
-sdk_instance = FinergyMiaPosSdk.get_instance(
+finergy_sdk = FinergyMiaPosSdk(
     base_url=FINERGY_MIA_POS_BASE_URL,
     merchant_id=FINERGY_MIA_POS_MERCHANT_ID,
     secret_key=FINERGY_MIA_POS_SECRET_KEY)
@@ -56,7 +56,7 @@ payment_data = {
     'failUrl': 'http://your_failUrl_url?orderId=order12345'
 }
 
-create_payment_response = sdk_instance.create_payment(payment_data=payment_data)
+create_payment_response = finergy_sdk.create_payment(payment_data=payment_data)
 
 payment_id = create_payment_response['paymentId']
 checkout_page = create_payment_response['checkoutPage']
@@ -79,13 +79,13 @@ callback_data = {
     'signature': 'gtWkQdF2X2oCwO/+a+DJxpDc5DhjC1PMVWrnCXsCX54qOo24siRTy4PAjHoYet1r0KERVEL65p7UZuHcaK+TOiJptlalMUVZWbGLPf05WpyKPOPSPI1P4ZoADzJpceYsKjjZImB/+ft6OAF+ahxazhHkiT1Ze05vwD2L1D6zRohcxZl9XRJMChZcVD9bdNy23ozwuq6FwlnneJJeCPNvqveg7f5e0CD1NXWdLJ3WryP0ypcGtQGZAY+PrhkdVG5SWhYr0FFniAZIrp9yOFn3vrsUP4rpZmeqIahSV6x12pyyRsm+bs/tjw/kPR34ygG7ksXsrpwhQbltAHWeWwnOmg=='
 }
 
-validate_result = sdk_instance.validate_callback_signature(callback_data=callback_data)
+validate_result = finergy_sdk.validate_callback_signature(callback_data=callback_data)
 ```
 
 ### Get payment status
 
 ```python
-payment_status_response = sdk_instance.get_payment_status(payment_id=payment_id)
+payment_status_response = finergy_sdk.get_payment_status(payment_id=payment_id)
 ```
 
 For more examples see [Finergy MIA POS PHP SDK](https://github.com/finergy-tech/mia-pay-ecomm-php-sdk)
