@@ -48,6 +48,7 @@ class FinergyMiaPosCommon:
                 return cls._process_response(response=response)
 
         except Exception as ex:
+            logger.exception(cls.__qualname__)
             raise FinergyClientApiException(f'MIA POS client url {url}, method {method} error: {ex}') from ex
 
     @classmethod
@@ -78,6 +79,7 @@ class FinergyMiaPosCommon:
                 return cls._process_response(response=response)
 
         except Exception as ex:
+            logger.exception(cls.__qualname__)
             raise FinergyClientApiException(f'MIA POS client url {url}, method {method} error: {ex}') from ex
 
 #region Auth

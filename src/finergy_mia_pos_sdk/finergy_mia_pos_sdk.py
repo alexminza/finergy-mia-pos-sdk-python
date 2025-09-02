@@ -1,5 +1,6 @@
 """Python SDK for Finergy MIA POS eComm API"""
 
+import logging
 import base64
 
 from cryptography.hazmat.primitives import hashes, serialization
@@ -9,6 +10,8 @@ from cryptography.exceptions import InvalidSignature
 from .finergy_mia_pos_auth_client import FinergyMiaPosAuthClient
 from .finergy_mia_pos_api_client import FinergyMiaPosApiClient
 from .finergy_mia_pos_common import FinergyValidationException
+
+logger = logging.getLogger(__name__)
 
 
 # Based on Finergy MIA POS PHP SDK https://github.com/finergy-tech/mia-pay-ecomm-php-sdk (https://packagist.org/packages/finergy/mia-pos-sdk)
@@ -225,6 +228,7 @@ class FinergyMiaPosSdk:
                 public_key_str=public_key_str)
 
         except Exception as ex:
+            logger.exception(FinergyMiaPosSdk.__qualname__)
             raise FinergyValidationException(f'Failed to verify signature: {ex}') from ex
 
     async def verify_signature_async(self, result_str: str, signature: str):
@@ -262,6 +266,7 @@ class FinergyMiaPosSdk:
                 public_key_str=public_key_str)
 
         except Exception as ex:
+            logger.exception(FinergyMiaPosSdk.__qualname__)
             raise FinergyValidationException(f'Failed to verify signature: {ex}') from ex
 
     @staticmethod
