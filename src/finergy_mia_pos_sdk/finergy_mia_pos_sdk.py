@@ -228,7 +228,7 @@ class FinergyMiaPosSdk:
                 public_key_str=public_key_str)
 
         except Exception as ex:
-            logger.exception(FinergyMiaPosSdk.__qualname__)
+            logger.exception(self.__class__.__qualname__)
             raise FinergyValidationException(f'Failed to verify signature: {ex}') from ex
 
     async def verify_signature_async(self, result_str: str, signature: str):
@@ -266,7 +266,7 @@ class FinergyMiaPosSdk:
                 public_key_str=public_key_str)
 
         except Exception as ex:
-            logger.exception(FinergyMiaPosSdk.__qualname__)
+            logger.exception(self.__class__.__qualname__)
             raise FinergyValidationException(f'Failed to verify signature: {ex}') from ex
 
     @staticmethod
