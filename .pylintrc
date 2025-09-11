@@ -27,10 +27,11 @@ disable=line-too-long,
       #too-many-lines,
       #multiple-statements,
       #multiple-imports,
-      #broad-except,
+      broad-except,
       #logging-fstring-interpolation,
       #global-statement,
       #c-extension-no-member
+      unnecessary-pass
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option
