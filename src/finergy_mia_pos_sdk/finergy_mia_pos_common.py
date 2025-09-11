@@ -17,7 +17,7 @@ class FinergyMiaPosCommon:
             raise FinergyClientApiException(f'MIA POS client url {response.request.url}, method {response.request.method} HTTP Error: {response.status_code}, Response: {response.text}')
 
         response_json: dict = response.json()
-        logger.debug('%s Response: %d', cls.__qualname__, response.status_code, extra={'response_json': response_json})
+        logger.debug('%s Response: %d %s %s', cls.__class__.__qualname__, response.status_code, response.request.method, response.request.url, extra={'method': response.request.method, 'url': response.request.url, 'params': response.request.url.params, 'response_json': response_json, 'status_code': response.status_code})
         return response_json
 
     @classmethod
