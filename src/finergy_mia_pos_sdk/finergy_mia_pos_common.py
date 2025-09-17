@@ -12,12 +12,12 @@ class FinergyMiaPosCommon:
     @classmethod
     def _process_response(cls, response: httpx.Response):
         if response.is_error:
-            logger.error('%s Error: %d %s', cls.__qualname__, response.status_code, response.text, extra={'method': response.request.method, 'url': response.request.url, 'params': response.request.url.params, 'response_text': response.text, 'status_code': response.status_code})
+            logger.error(f'{cls.__qualname__} Error: %d %s', response.status_code, response.text, extra={'method': response.request.method, 'url': response.request.url, 'params': response.request.url.params, 'response_text': response.text, 'status_code': response.status_code})
             #response.raise_for_status()
             raise FinergyClientApiException(f'MIA POS client url {response.request.url}, method {response.request.method} HTTP Error: {response.status_code}, Response: {response.text}')
 
         response_json: dict = response.json()
-        logger.debug('%s Response: %d %s %s', cls.__class__.__qualname__, response.status_code, response.request.method, response.request.url, extra={'method': response.request.method, 'url': response.request.url, 'params': response.request.url.params, 'response_json': response_json, 'status_code': response.status_code})
+        logger.debug(f'{cls.__qualname__} Response: %d %s %s', response.status_code, response.request.method, response.request.url, extra={'method': response.request.method, 'url': response.request.url, 'params': response.request.url.params, 'response_json': response_json, 'status_code': response.status_code})
         return response_json
 
     @classmethod
@@ -42,7 +42,7 @@ class FinergyMiaPosCommon:
         try:
             auth = BearerAuth(token) if token else None
 
-            logger.debug('%s Request: %s %s', cls.__qualname__, method, url, extra={'method': method, 'url': url, 'data': data, 'params': params, 'token': token})
+            logger.debug(f'{cls.__qualname__} Request: %s %s', method, url, extra={'method': method, 'url': url, 'data': data, 'params': params, 'token': token})
             with httpx.Client() as client:
                 response = client.request(method=method, url=url, params=params, json=data, auth=auth, timeout=cls.DEFAULT_TIMEOUT)
                 return cls._process_response(response=response)
@@ -73,7 +73,7 @@ class FinergyMiaPosCommon:
         try:
             auth = BearerAuth(token) if token else None
 
-            logger.debug('%s Request: %s %s', cls.__qualname__, method, url, extra={'method': method, 'url': url, 'data': data, 'params': params, 'token': token})
+            logger.debug(f'{cls.__qualname__} Request: %s %s', method, url, extra={'method': method, 'url': url, 'data': data, 'params': params, 'token': token})
             async with httpx.AsyncClient() as client:
                 response = await client.request(method=method, url=url, params=params, json=data, auth=auth, timeout=cls.DEFAULT_TIMEOUT)
                 return cls._process_response(response=response)
