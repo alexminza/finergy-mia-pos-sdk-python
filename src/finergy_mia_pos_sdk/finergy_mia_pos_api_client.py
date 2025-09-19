@@ -5,9 +5,11 @@ from .finergy_mia_pos_common import FinergyMiaPosCommon, FinergyClientApiExcepti
 
 class FinergyMiaPosApiClient:
     """
-    Handles API requests to the MIA POS Ecomm API.
+    Handles API requests to the MIA POS eComm API.
     Provides methods for creating payments, checking payment status,
     and retrieving the public key.
+
+    https://github.com/finergy-tech/mia-pay-ecomm-integration/blob/main/docs/mia-ecomm-api_v0.0.1.html
     """
 
     API_PAY = '/ecomm/api/v1/pay'
