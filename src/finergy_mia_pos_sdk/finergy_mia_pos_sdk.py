@@ -15,9 +15,14 @@ logger = logging.getLogger(__name__)
 
 
 # Based on Finergy MIA POS PHP SDK https://github.com/finergy-tech/mia-pay-ecomm-php-sdk (https://packagist.org/packages/finergy/mia-pos-sdk)
-# Integration with MIA POS eComm https://github.com/finergy-tech/mia-pay-ecomm-integration
 
 class FinergyMiaPosSdk:
+    """
+    * Integration with MIA POS eComm https://github.com/finergy-tech/mia-pay-ecomm-integration
+    * MIA POS ecomm API https://github.com/finergy-tech/mia-pay-ecomm-integration/blob/main/docs/mia-ecomm-api_v0.0.1.html
+    """
+
+    # https://github.com/finergy-tech/mia-pay-ecomm-integration/blob/main/docs/en/protocol-overview.md#1-initial-configuration
     TEST_BASE_URL = 'https://ecomm-test.miapos.md'
 
     _api_client = None

@@ -12,6 +12,8 @@ class FinergyMiaPosAuthClient:
     """
     Handles authentication with the MIA POS Ecomm API.
     Provides methods to generate, refresh, and retrieve access tokens.
+
+    https://github.com/finergy-tech/mia-pay-ecomm-integration/blob/main/docs/mia-ecomm-api_v0.0.1.html
     """
 
     AUTH_TOKEN = '/ecomm/api/v1/token'
