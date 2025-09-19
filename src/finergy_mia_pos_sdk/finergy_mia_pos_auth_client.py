@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 class FinergyMiaPosAuthClient:
     """
-    Handles authentication with the MIA POS Ecomm API.
+    Handles authentication with the MIA POS eComm API.
     Provides methods to generate, refresh, and retrieve access tokens.
 
     https://github.com/finergy-tech/mia-pay-ecomm-integration/blob/main/docs/mia-ecomm-api_v0.0.1.html

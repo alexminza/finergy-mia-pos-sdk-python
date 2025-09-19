@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 class FinergyMiaPosSdk:
     """
     * Integration with MIA POS eComm https://github.com/finergy-tech/mia-pay-ecomm-integration
-    * MIA POS ecomm API https://github.com/finergy-tech/mia-pay-ecomm-integration/blob/main/docs/mia-ecomm-api_v0.0.1.html
+    * MIA POS eComm API https://github.com/finergy-tech/mia-pay-ecomm-integration/blob/main/docs/mia-ecomm-api_v0.0.1.html
     """
 
     # https://github.com/finergy-tech/mia-pay-ecomm-integration/blob/main/docs/en/protocol-overview.md#1-initial-configuration
